@@ -6,7 +6,7 @@
   "typings": "dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/flower-digital/exoapi-sdk.git"
+    "url": "git+https://github.com/flower-digital/exoapi-sdk.git"
   },
   "license": "MIT",
   "scripts": {
