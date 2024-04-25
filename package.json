@@ -1,0 +1,23 @@
+{
+  "name": "@flower-digital/exoapi-sdk",
+  "version": "1.0.0",
+  "description": "JavaScript/TypeScript SDK for ExoAPI",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/flower-digital/exoapi-sdk.git"
+  },
+  "license": "MIT",
+  "scripts": {
+    "prepare": "npm run build",
+    "build": "tsc --declaration",
+    "generate-code": "curl http://localhost:3600/products/sdk/typescript > src/index.ts",
+    "test": "exit 0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "ts-node": "10.9.2",
+    "typescript": "5.4.3"
+  }
+}
