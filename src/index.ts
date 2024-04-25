@@ -1,1 +1,756 @@
-{"typescript":"export interface ExoAPIOptions {\n    apiKey?: string;\n    coreUrl?: string;\n}\n\nexport class ExoAPI {\n    options: ExoAPIOptions = { coreUrl: 'https://api.exoapi.dev' };\n\n    constructor(options: ExoAPIOptions = {}) {\n        this.options = { ...this.options, ...options };\n    }\n\n    /**\n     * Generate high-quality PDF documents or images from HTML\n     */\n    async htmlRenderer(params: {\n        html: string;\n        format?: 'pdf' | 'png';\n        title?: string;\n        imageWidth?: number;\n        imageHeight?: number;\n        pageSize?:\n            | 'letter'\n            | 'legal'\n            | 'tabloid'\n            | 'ledger'\n            | 'a0'\n            | 'a1'\n            | 'a2'\n            | 'a3'\n            | 'a4'\n            | 'a5'\n            | 'a6';\n        pageWidth?: string;\n        pageHeight?: string;\n        margin?: string;\n        marginLeft?: string;\n        marginRight?: string;\n        marginTop?: string;\n        marginBottom?: string;\n        landscape?: boolean;\n        css?: string;\n        header?: string;\n        footer?: string;\n    }): Promise<Blob> {\n        const res = await fetch('https://api.exoapi.dev/html-renderer', {\n            method: 'POST',\n            headers: {\n                Authorization: `Bearer ${this.options.apiKey}`,\n                'Content-Type': 'application/json',\n            },\n            body: JSON.stringify(params),\n        });\n        if (res.status >= 400) {\n            throw await res.json();\n        }\n        return await res.blob();\n    }\n\n    /**\n     * Quickly convert between all different kinds of measurement units\n     */\n    async unitConverter(params: {\n        from:\n            | 'm/s2'\n            | \"'\"\n            | \"''\"\n            | 'deg'\n            | 'gon'\n            | 'rad'\n            | 'rad/s'\n            | '[acr_us]'\n            | '[sft_i]'\n            | '[sin_i]'\n            | '[smi_us]'\n            | '[syd_i]'\n            | 'ar'\n            | 'cm2'\n            | 'har'\n            | 'km2'\n            | 'm2'\n            | 'mm2'\n            | 'AUD'\n            | 'BGN'\n            | 'BRL'\n            | 'CAD'\n            | 'CHF'\n            | 'CNY'\n            | 'CZK'\n            | 'DKK'\n            | 'EUR'\n            | 'GBP'\n            | 'HKD'\n            | 'HUF'\n            | 'IDR'\n            | 'ILS'\n            | 'INR'\n            | 'ISK'\n            | 'JPY'\n            | 'KRW'\n            | 'MXN'\n            | 'MYR'\n            | 'NOK'\n            | 'NZD'\n            | 'PHP'\n            | 'PLN'\n            | 'RON'\n            | 'SEK'\n            | 'SGD'\n            | 'THB'\n            | 'TRY'\n            | 'USD'\n            | 'ZAR'\n            | 'F'\n            | 'C'\n            | 'S'\n            | 'A'\n            | 'V'\n            | 'Ohm'\n            | '[Btu_IT]'\n            | 'J'\n            | 'kW.h'\n            | 'MJ'\n            | 'kW.h/100km'\n            | 'm/J'\n            | 'W.h/km'\n            | 'N'\n            | '%'\n            | 'bpm'\n            | 'Hz'\n            | 'rpm'\n            | '[mi_i]/[gal_br]'\n            | 'L/100km'\n            | 'm/m3'\n            | 'lx'\n            | 'H'\n            | '[ft_i]'\n            | '[in_i]'\n            | '[mi_i]'\n            | '[nmi_i]'\n            | '[yd_i]'\n            | 'cm'\n            | 'dm'\n            | 'km'\n            | 'm'\n            | 'mm'\n            | 'g/km'\n            | 'kg/m'\n            | 'lm'\n            | 'Wb'\n            | 'T'\n            | '[lb_av]'\n            | 'g'\n            | 'kg'\n            | 't'\n            | '[HP_e]'\n            | '[HP_m]'\n            | '[HP_s]'\n            | '[HP]'\n            | 'kW'\n            | 'W'\n            | 'Pa'\n            | 'Bq'\n            | '[kn_i]'\n            | 'km/h'\n            | 'm/s'\n            | '[degF]'\n            | 'Cel'\n            | 'K'\n            | 'a'\n            | 'd'\n            | 'h'\n            | 'min'\n            | 'mo'\n            | 's'\n            | 'wk'\n            | 'N.m'\n            | '[gal_br]'\n            | '[pk_br]'\n            | 'L'\n            | 'm3';\n        to:\n            | 'm/s2'\n            | \"'\"\n            | \"''\"\n            | 'deg'\n            | 'gon'\n            | 'rad'\n            | 'rad/s'\n            | '[acr_us]'\n            | '[sft_i]'\n            | '[sin_i]'\n            | '[smi_us]'\n            | '[syd_i]'\n            | 'ar'\n            | 'cm2'\n            | 'har'\n            | 'km2'\n            | 'm2'\n            | 'mm2'\n            | 'AUD'\n            | 'BGN'\n            | 'BRL'\n            | 'CAD'\n            | 'CHF'\n            | 'CNY'\n            | 'CZK'\n            | 'DKK'\n            | 'EUR'\n            | 'GBP'\n            | 'HKD'\n            | 'HUF'\n            | 'IDR'\n            | 'ILS'\n            | 'INR'\n            | 'ISK'\n            | 'JPY'\n            | 'KRW'\n            | 'MXN'\n            | 'MYR'\n            | 'NOK'\n            | 'NZD'\n            | 'PHP'\n            | 'PLN'\n            | 'RON'\n            | 'SEK'\n            | 'SGD'\n            | 'THB'\n            | 'TRY'\n            | 'USD'\n            | 'ZAR'\n            | 'F'\n            | 'C'\n            | 'S'\n            | 'A'\n            | 'V'\n            | 'Ohm'\n            | '[Btu_IT]'\n            | 'J'\n            | 'kW.h'\n            | 'MJ'\n            | 'kW.h/100km'\n            | 'm/J'\n            | 'W.h/km'\n            | 'N'\n            | '%'\n            | 'bpm'\n            | 'Hz'\n            | 'rpm'\n            | '[mi_i]/[gal_br]'\n            | 'L/100km'\n            | 'm/m3'\n            | 'lx'\n            | 'H'\n            | '[ft_i]'\n            | '[in_i]'\n            | '[mi_i]'\n            | '[nmi_i]'\n            | '[yd_i]'\n            | 'cm'\n            | 'dm'\n            | 'km'\n            | 'm'\n            | 'mm'\n            | 'g/km'\n            | 'kg/m'\n            | 'lm'\n            | 'Wb'\n            | 'T'\n            | '[lb_av]'\n            | 'g'\n            | 'kg'\n            | 't'\n            | '[HP_e]'\n            | '[HP_m]'\n            | '[HP_s]'\n            | '[HP]'\n            | 'kW'\n            | 'W'\n            | 'Pa'\n            | 'Bq'\n            | '[kn_i]'\n            | 'km/h'\n            | 'm/s'\n            | '[degF]'\n            | 'Cel'\n            | 'K'\n            | 'a'\n            | 'd'\n            | 'h'\n            | 'min'\n            | 'mo'\n            | 's'\n            | 'wk'\n            | 'N.m'\n            | '[gal_br]'\n            | '[pk_br]'\n            | 'L'\n            | 'm3';\n        value: number;\n    }): Promise<{\n        type?:\n            | 'acceleration'\n            | 'angle'\n            | 'angularVelocity'\n            | 'area'\n            | 'currency'\n            | 'electricCapacitance'\n            | 'electricCharge'\n            | 'electricConductance'\n            | 'electricCurrent'\n            | 'electricPotential'\n            | 'electricResistance'\n            | 'energy'\n            | 'energyEfficiency'\n            | 'force'\n            | 'fraction'\n            | 'frequency'\n            | 'fuelEfficiency'\n            | 'illuminance'\n            | 'inductance'\n            | 'length'\n            | 'linearMassDensity'\n            | 'luminousFlux'\n            | 'magneticFlux'\n            | 'magneticFluxDensity'\n            | 'mass'\n            | 'power'\n            | 'pressure'\n            | 'radioactivity'\n            | 'speed'\n            | 'temperature'\n            | 'time'\n            | 'torque'\n            | 'volume';\n        from?:\n            | 'm/s2'\n            | \"'\"\n            | \"''\"\n            | 'deg'\n            | 'gon'\n            | 'rad'\n            | 'rad/s'\n            | '[acr_us]'\n            | '[sft_i]'\n            | '[sin_i]'\n            | '[smi_us]'\n            | '[syd_i]'\n            | 'ar'\n            | 'cm2'\n            | 'har'\n            | 'km2'\n            | 'm2'\n            | 'mm2'\n            | 'AUD'\n            | 'BGN'\n            | 'BRL'\n            | 'CAD'\n            | 'CHF'\n            | 'CNY'\n            | 'CZK'\n            | 'DKK'\n            | 'EUR'\n            | 'GBP'\n            | 'HKD'\n            | 'HUF'\n            | 'IDR'\n            | 'ILS'\n            | 'INR'\n            | 'ISK'\n            | 'JPY'\n            | 'KRW'\n            | 'MXN'\n            | 'MYR'\n            | 'NOK'\n            | 'NZD'\n            | 'PHP'\n            | 'PLN'\n            | 'RON'\n            | 'SEK'\n            | 'SGD'\n            | 'THB'\n            | 'TRY'\n            | 'USD'\n            | 'ZAR'\n            | 'F'\n            | 'C'\n            | 'S'\n            | 'A'\n            | 'V'\n            | 'Ohm'\n            | '[Btu_IT]'\n            | 'J'\n            | 'kW.h'\n            | 'MJ'\n            | 'kW.h/100km'\n            | 'm/J'\n            | 'W.h/km'\n            | 'N'\n            | '%'\n            | 'bpm'\n            | 'Hz'\n            | 'rpm'\n            | '[mi_i]/[gal_br]'\n            | 'L/100km'\n            | 'm/m3'\n            | 'lx'\n            | 'H'\n            | '[ft_i]'\n            | '[in_i]'\n            | '[mi_i]'\n            | '[nmi_i]'\n            | '[yd_i]'\n            | 'cm'\n            | 'dm'\n            | 'km'\n            | 'm'\n            | 'mm'\n            | 'g/km'\n            | 'kg/m'\n            | 'lm'\n            | 'Wb'\n            | 'T'\n            | '[lb_av]'\n            | 'g'\n            | 'kg'\n            | 't'\n            | '[HP_e]'\n            | '[HP_m]'\n            | '[HP_s]'\n            | '[HP]'\n            | 'kW'\n            | 'W'\n            | 'Pa'\n            | 'Bq'\n            | '[kn_i]'\n            | 'km/h'\n            | 'm/s'\n            | '[degF]'\n            | 'Cel'\n            | 'K'\n            | 'a'\n            | 'd'\n            | 'h'\n            | 'min'\n            | 'mo'\n            | 's'\n            | 'wk'\n            | 'N.m'\n            | '[gal_br]'\n            | '[pk_br]'\n            | 'L'\n            | 'm3';\n        to?:\n            | 'm/s2'\n            | \"'\"\n            | \"''\"\n            | 'deg'\n            | 'gon'\n            | 'rad'\n            | 'rad/s'\n            | '[acr_us]'\n            | '[sft_i]'\n            | '[sin_i]'\n            | '[smi_us]'\n            | '[syd_i]'\n            | 'ar'\n            | 'cm2'\n            | 'har'\n            | 'km2'\n            | 'm2'\n            | 'mm2'\n            | 'AUD'\n            | 'BGN'\n            | 'BRL'\n            | 'CAD'\n            | 'CHF'\n            | 'CNY'\n            | 'CZK'\n            | 'DKK'\n            | 'EUR'\n            | 'GBP'\n            | 'HKD'\n            | 'HUF'\n            | 'IDR'\n            | 'ILS'\n            | 'INR'\n            | 'ISK'\n            | 'JPY'\n            | 'KRW'\n            | 'MXN'\n            | 'MYR'\n            | 'NOK'\n            | 'NZD'\n            | 'PHP'\n            | 'PLN'\n            | 'RON'\n            | 'SEK'\n            | 'SGD'\n            | 'THB'\n            | 'TRY'\n            | 'USD'\n            | 'ZAR'\n            | 'F'\n            | 'C'\n            | 'S'\n            | 'A'\n            | 'V'\n            | 'Ohm'\n            | '[Btu_IT]'\n            | 'J'\n            | 'kW.h'\n            | 'MJ'\n            | 'kW.h/100km'\n            | 'm/J'\n            | 'W.h/km'\n            | 'N'\n            | '%'\n            | 'bpm'\n            | 'Hz'\n            | 'rpm'\n            | '[mi_i]/[gal_br]'\n            | 'L/100km'\n            | 'm/m3'\n            | 'lx'\n            | 'H'\n            | '[ft_i]'\n            | '[in_i]'\n            | '[mi_i]'\n            | '[nmi_i]'\n            | '[yd_i]'\n            | 'cm'\n            | 'dm'\n            | 'km'\n            | 'm'\n            | 'mm'\n            | 'g/km'\n            | 'kg/m'\n            | 'lm'\n            | 'Wb'\n            | 'T'\n            | '[lb_av]'\n            | 'g'\n            | 'kg'\n            | 't'\n            | '[HP_e]'\n            | '[HP_m]'\n            | '[HP_s]'\n            | '[HP]'\n            | 'kW'\n            | 'W'\n            | 'Pa'\n            | 'Bq'\n            | '[kn_i]'\n            | 'km/h'\n            | 'm/s'\n            | '[degF]'\n            | 'Cel'\n            | 'K'\n            | 'a'\n            | 'd'\n            | 'h'\n            | 'min'\n            | 'mo'\n            | 's'\n            | 'wk'\n            | 'N.m'\n            | '[gal_br]'\n            | '[pk_br]'\n            | 'L'\n            | 'm3';\n        value?: number;\n        result?: number;\n    }> {\n        const res = await fetch('https://api.exoapi.dev/unit-converter', {\n            method: 'POST',\n            headers: {\n                Authorization: `Bearer ${this.options.apiKey}`,\n                'Content-Type': 'application/json',\n            },\n            body: JSON.stringify(params),\n        });\n        if (res.status >= 400) {\n            throw await res.json();\n        }\n        return await res.json();\n    }\n\n    /**\n     * Generate high quality QR code & barcode images in a matter of seconds\n     */\n    async barcodeGenerator(params: {\n        type:\n            | 'auspost'\n            | 'azteccode'\n            | 'azteccodecompact'\n            | 'aztecrune'\n            | 'bc412'\n            | 'channelcode'\n            | 'codablockf'\n            | 'code11'\n            | 'code128'\n            | 'code16k'\n            | 'code2of5'\n            | 'code32'\n            | 'code39'\n            | 'code39ext'\n            | 'code49'\n            | 'code93'\n            | 'code93ext'\n            | 'codeone'\n            | 'coop2of5'\n            | 'daft'\n            | 'databarexpanded'\n            | 'databarexpandedcomposite'\n            | 'databarexpandedstacked'\n            | 'databarexpandedstackedcomposite'\n            | 'databarlimited'\n            | 'databarlimitedcomposite'\n            | 'databaromni'\n            | 'databaromnicomposite'\n            | 'databarstacked'\n            | 'databarstackedcomposite'\n            | 'databarstackedomni'\n            | 'databarstackedomnicomposite'\n            | 'databartruncated'\n            | 'databartruncatedcomposite'\n            | 'datalogic2of5'\n            | 'datamatrix'\n            | 'datamatrixrectangular'\n            | 'datamatrixrectangularextension'\n            | 'dotcode'\n            | 'ean13'\n            | 'ean13composite'\n            | 'ean14'\n            | 'ean2'\n            | 'ean5'\n            | 'ean8'\n            | 'ean8composite'\n            | 'flattermarken'\n            | 'gs1-128'\n            | 'gs1-128composite'\n            | 'gs1-cc'\n            | 'gs1datamatrix'\n            | 'gs1datamatrixrectangular'\n            | 'gs1northamericancoupon'\n            | 'gs1qrcode'\n            | 'hanxin'\n            | 'hibcazteccode'\n            | 'hibccodablockf'\n            | 'hibccode128'\n            | 'hibccode39'\n            | 'hibcdatamatrix'\n            | 'hibcdatamatrixrectangular'\n            | 'hibcmicropdf417'\n            | 'hibcpdf417'\n            | 'hibcqrcode'\n            | 'iata2of5'\n            | 'identcode'\n            | 'industrial2of5'\n            | 'interleaved2of5'\n            | 'isbn'\n            | 'ismn'\n            | 'issn'\n            | 'itf14'\n            | 'japanpost'\n            | 'kix'\n            | 'leitcode'\n            | 'mailmark'\n            | 'matrix2of5'\n            | 'maxicode'\n            | 'micropdf417'\n            | 'microqrcode'\n            | 'msi'\n            | 'onecode'\n            | 'pdf417'\n            | 'pdf417compact'\n            | 'pharmacode'\n            | 'pharmacode2'\n            | 'planet'\n            | 'plessey'\n            | 'posicode'\n            | 'postnet'\n            | 'pzn'\n            | 'qrcode'\n            | 'rationalizedCodabar'\n            | 'raw'\n            | 'royalmail'\n            | 'sscc18'\n            | 'symbol'\n            | 'telepen'\n            | 'telepennumeric'\n            | 'ultracode'\n            | 'upca'\n            | 'upcacomposite'\n            | 'upce'\n            | 'upcecomposite';\n        value: string;\n        format?: 'png' | 'svg';\n        width?: number;\n        height?: number;\n        showText?: boolean;\n        fitWidth?: boolean;\n        foregroundColor?: string;\n        backgroundColor?: string;\n    }): Promise<Blob> {\n        const res = await fetch('https://api.exoapi.dev/barcode-generator', {\n            method: 'POST',\n            headers: {\n                Authorization: `Bearer ${this.options.apiKey}`,\n                'Content-Type': 'application/json',\n            },\n            body: JSON.stringify(params),\n        });\n        if (res.status >= 400) {\n            throw await res.json();\n        }\n        return await res.blob();\n    }\n\n    /**\n     * Effortlessly convert GPS coordinates to human-readable addresses\n     */\n    async reverseGeocoding(params: {\n        lat: number;\n        lon: number;\n        locale?: string;\n    }): Promise<{\n        lat?: number;\n        lon?: number;\n        address?: string;\n        houseNumber?: string;\n        street?: string;\n        postalCode?: string;\n        city?: string;\n        region?: string;\n        regionCode?: string;\n        country?: string;\n        countryCode?: string;\n        countryCode3?: string;\n        currency?: string;\n    }> {\n        const res = await fetch('https://api.exoapi.dev/reverse-geocoding', {\n            method: 'POST',\n            headers: {\n                Authorization: `Bearer ${this.options.apiKey}`,\n                'Content-Type': 'application/json',\n            },\n            body: JSON.stringify(params),\n        });\n        if (res.status >= 400) {\n            throw await res.json();\n        }\n        return await res.json();\n    }\n}\n"}
+export interface ExoAPIOptions {
+    apiKey?: string;
+    coreUrl?: string;
+}
+
+export class ExoAPI {
+    options: ExoAPIOptions = { coreUrl: 'https://api.exoapi.dev' };
+
+    constructor(options: ExoAPIOptions = {}) {
+        this.options = { ...this.options, ...options };
+    }
+
+    /**
+     * Generate high-quality PDF documents or images from HTML
+     */
+    async htmlRenderer(params: {
+        html: string;
+        format?: 'pdf' | 'png';
+        title?: string;
+        imageWidth?: number;
+        imageHeight?: number;
+        pageSize?:
+            | 'letter'
+            | 'legal'
+            | 'tabloid'
+            | 'ledger'
+            | 'a0'
+            | 'a1'
+            | 'a2'
+            | 'a3'
+            | 'a4'
+            | 'a5'
+            | 'a6';
+        pageWidth?: string;
+        pageHeight?: string;
+        margin?: string;
+        marginLeft?: string;
+        marginRight?: string;
+        marginTop?: string;
+        marginBottom?: string;
+        landscape?: boolean;
+        css?: string;
+        header?: string;
+        footer?: string;
+    }): Promise<Blob> {
+        const res = await fetch('https://api.exoapi.dev/html-renderer', {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${this.options.apiKey}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(params),
+        });
+        if (res.status >= 400) {
+            throw await res.json();
+        }
+        return await res.blob();
+    }
+
+    /**
+     * Quickly convert between all different kinds of measurement units
+     */
+    async unitConverter(params: {
+        from:
+            | 'm/s2'
+            | "'"
+            | "''"
+            | 'deg'
+            | 'gon'
+            | 'rad'
+            | 'rad/s'
+            | '[acr_us]'
+            | '[sft_i]'
+            | '[sin_i]'
+            | '[smi_us]'
+            | '[syd_i]'
+            | 'ar'
+            | 'cm2'
+            | 'har'
+            | 'km2'
+            | 'm2'
+            | 'mm2'
+            | 'AUD'
+            | 'BGN'
+            | 'BRL'
+            | 'CAD'
+            | 'CHF'
+            | 'CNY'
+            | 'CZK'
+            | 'DKK'
+            | 'EUR'
+            | 'GBP'
+            | 'HKD'
+            | 'HUF'
+            | 'IDR'
+            | 'ILS'
+            | 'INR'
+            | 'ISK'
+            | 'JPY'
+            | 'KRW'
+            | 'MXN'
+            | 'MYR'
+            | 'NOK'
+            | 'NZD'
+            | 'PHP'
+            | 'PLN'
+            | 'RON'
+            | 'SEK'
+            | 'SGD'
+            | 'THB'
+            | 'TRY'
+            | 'USD'
+            | 'ZAR'
+            | 'F'
+            | 'C'
+            | 'S'
+            | 'A'
+            | 'V'
+            | 'Ohm'
+            | '[Btu_IT]'
+            | 'J'
+            | 'kW.h'
+            | 'MJ'
+            | 'kW.h/100km'
+            | 'm/J'
+            | 'W.h/km'
+            | 'N'
+            | '%'
+            | 'bpm'
+            | 'Hz'
+            | 'rpm'
+            | '[mi_i]/[gal_br]'
+            | 'L/100km'
+            | 'm/m3'
+            | 'lx'
+            | 'H'
+            | '[ft_i]'
+            | '[in_i]'
+            | '[mi_i]'
+            | '[nmi_i]'
+            | '[yd_i]'
+            | 'cm'
+            | 'dm'
+            | 'km'
+            | 'm'
+            | 'mm'
+            | 'g/km'
+            | 'kg/m'
+            | 'lm'
+            | 'Wb'
+            | 'T'
+            | '[lb_av]'
+            | 'g'
+            | 'kg'
+            | 't'
+            | '[HP_e]'
+            | '[HP_m]'
+            | '[HP_s]'
+            | '[HP]'
+            | 'kW'
+            | 'W'
+            | 'Pa'
+            | 'Bq'
+            | '[kn_i]'
+            | 'km/h'
+            | 'm/s'
+            | '[degF]'
+            | 'Cel'
+            | 'K'
+            | 'a'
+            | 'd'
+            | 'h'
+            | 'min'
+            | 'mo'
+            | 's'
+            | 'wk'
+            | 'N.m'
+            | '[gal_br]'
+            | '[pk_br]'
+            | 'L'
+            | 'm3';
+        to:
+            | 'm/s2'
+            | "'"
+            | "''"
+            | 'deg'
+            | 'gon'
+            | 'rad'
+            | 'rad/s'
+            | '[acr_us]'
+            | '[sft_i]'
+            | '[sin_i]'
+            | '[smi_us]'
+            | '[syd_i]'
+            | 'ar'
+            | 'cm2'
+            | 'har'
+            | 'km2'
+            | 'm2'
+            | 'mm2'
+            | 'AUD'
+            | 'BGN'
+            | 'BRL'
+            | 'CAD'
+            | 'CHF'
+            | 'CNY'
+            | 'CZK'
+            | 'DKK'
+            | 'EUR'
+            | 'GBP'
+            | 'HKD'
+            | 'HUF'
+            | 'IDR'
+            | 'ILS'
+            | 'INR'
+            | 'ISK'
+            | 'JPY'
+            | 'KRW'
+            | 'MXN'
+            | 'MYR'
+            | 'NOK'
+            | 'NZD'
+            | 'PHP'
+            | 'PLN'
+            | 'RON'
+            | 'SEK'
+            | 'SGD'
+            | 'THB'
+            | 'TRY'
+            | 'USD'
+            | 'ZAR'
+            | 'F'
+            | 'C'
+            | 'S'
+            | 'A'
+            | 'V'
+            | 'Ohm'
+            | '[Btu_IT]'
+            | 'J'
+            | 'kW.h'
+            | 'MJ'
+            | 'kW.h/100km'
+            | 'm/J'
+            | 'W.h/km'
+            | 'N'
+            | '%'
+            | 'bpm'
+            | 'Hz'
+            | 'rpm'
+            | '[mi_i]/[gal_br]'
+            | 'L/100km'
+            | 'm/m3'
+            | 'lx'
+            | 'H'
+            | '[ft_i]'
+            | '[in_i]'
+            | '[mi_i]'
+            | '[nmi_i]'
+            | '[yd_i]'
+            | 'cm'
+            | 'dm'
+            | 'km'
+            | 'm'
+            | 'mm'
+            | 'g/km'
+            | 'kg/m'
+            | 'lm'
+            | 'Wb'
+            | 'T'
+            | '[lb_av]'
+            | 'g'
+            | 'kg'
+            | 't'
+            | '[HP_e]'
+            | '[HP_m]'
+            | '[HP_s]'
+            | '[HP]'
+            | 'kW'
+            | 'W'
+            | 'Pa'
+            | 'Bq'
+            | '[kn_i]'
+            | 'km/h'
+            | 'm/s'
+            | '[degF]'
+            | 'Cel'
+            | 'K'
+            | 'a'
+            | 'd'
+            | 'h'
+            | 'min'
+            | 'mo'
+            | 's'
+            | 'wk'
+            | 'N.m'
+            | '[gal_br]'
+            | '[pk_br]'
+            | 'L'
+            | 'm3';
+        value: number;
+    }): Promise<{
+        type?:
+            | 'acceleration'
+            | 'angle'
+            | 'angularVelocity'
+            | 'area'
+            | 'currency'
+            | 'electricCapacitance'
+            | 'electricCharge'
+            | 'electricConductance'
+            | 'electricCurrent'
+            | 'electricPotential'
+            | 'electricResistance'
+            | 'energy'
+            | 'energyEfficiency'
+            | 'force'
+            | 'fraction'
+            | 'frequency'
+            | 'fuelEfficiency'
+            | 'illuminance'
+            | 'inductance'
+            | 'length'
+            | 'linearMassDensity'
+            | 'luminousFlux'
+            | 'magneticFlux'
+            | 'magneticFluxDensity'
+            | 'mass'
+            | 'power'
+            | 'pressure'
+            | 'radioactivity'
+            | 'speed'
+            | 'temperature'
+            | 'time'
+            | 'torque'
+            | 'volume';
+        from?:
+            | 'm/s2'
+            | "'"
+            | "''"
+            | 'deg'
+            | 'gon'
+            | 'rad'
+            | 'rad/s'
+            | '[acr_us]'
+            | '[sft_i]'
+            | '[sin_i]'
+            | '[smi_us]'
+            | '[syd_i]'
+            | 'ar'
+            | 'cm2'
+            | 'har'
+            | 'km2'
+            | 'm2'
+            | 'mm2'
+            | 'AUD'
+            | 'BGN'
+            | 'BRL'
+            | 'CAD'
+            | 'CHF'
+            | 'CNY'
+            | 'CZK'
+            | 'DKK'
+            | 'EUR'
+            | 'GBP'
+            | 'HKD'
+            | 'HUF'
+            | 'IDR'
+            | 'ILS'
+            | 'INR'
+            | 'ISK'
+            | 'JPY'
+            | 'KRW'
+            | 'MXN'
+            | 'MYR'
+            | 'NOK'
+            | 'NZD'
+            | 'PHP'
+            | 'PLN'
+            | 'RON'
+            | 'SEK'
+            | 'SGD'
+            | 'THB'
+            | 'TRY'
+            | 'USD'
+            | 'ZAR'
+            | 'F'
+            | 'C'
+            | 'S'
+            | 'A'
+            | 'V'
+            | 'Ohm'
+            | '[Btu_IT]'
+            | 'J'
+            | 'kW.h'
+            | 'MJ'
+            | 'kW.h/100km'
+            | 'm/J'
+            | 'W.h/km'
+            | 'N'
+            | '%'
+            | 'bpm'
+            | 'Hz'
+            | 'rpm'
+            | '[mi_i]/[gal_br]'
+            | 'L/100km'
+            | 'm/m3'
+            | 'lx'
+            | 'H'
+            | '[ft_i]'
+            | '[in_i]'
+            | '[mi_i]'
+            | '[nmi_i]'
+            | '[yd_i]'
+            | 'cm'
+            | 'dm'
+            | 'km'
+            | 'm'
+            | 'mm'
+            | 'g/km'
+            | 'kg/m'
+            | 'lm'
+            | 'Wb'
+            | 'T'
+            | '[lb_av]'
+            | 'g'
+            | 'kg'
+            | 't'
+            | '[HP_e]'
+            | '[HP_m]'
+            | '[HP_s]'
+            | '[HP]'
+            | 'kW'
+            | 'W'
+            | 'Pa'
+            | 'Bq'
+            | '[kn_i]'
+            | 'km/h'
+            | 'm/s'
+            | '[degF]'
+            | 'Cel'
+            | 'K'
+            | 'a'
+            | 'd'
+            | 'h'
+            | 'min'
+            | 'mo'
+            | 's'
+            | 'wk'
+            | 'N.m'
+            | '[gal_br]'
+            | '[pk_br]'
+            | 'L'
+            | 'm3';
+        to?:
+            | 'm/s2'
+            | "'"
+            | "''"
+            | 'deg'
+            | 'gon'
+            | 'rad'
+            | 'rad/s'
+            | '[acr_us]'
+            | '[sft_i]'
+            | '[sin_i]'
+            | '[smi_us]'
+            | '[syd_i]'
+            | 'ar'
+            | 'cm2'
+            | 'har'
+            | 'km2'
+            | 'm2'
+            | 'mm2'
+            | 'AUD'
+            | 'BGN'
+            | 'BRL'
+            | 'CAD'
+            | 'CHF'
+            | 'CNY'
+            | 'CZK'
+            | 'DKK'
+            | 'EUR'
+            | 'GBP'
+            | 'HKD'
+            | 'HUF'
+            | 'IDR'
+            | 'ILS'
+            | 'INR'
+            | 'ISK'
+            | 'JPY'
+            | 'KRW'
+            | 'MXN'
+            | 'MYR'
+            | 'NOK'
+            | 'NZD'
+            | 'PHP'
+            | 'PLN'
+            | 'RON'
+            | 'SEK'
+            | 'SGD'
+            | 'THB'
+            | 'TRY'
+            | 'USD'
+            | 'ZAR'
+            | 'F'
+            | 'C'
+            | 'S'
+            | 'A'
+            | 'V'
+            | 'Ohm'
+            | '[Btu_IT]'
+            | 'J'
+            | 'kW.h'
+            | 'MJ'
+            | 'kW.h/100km'
+            | 'm/J'
+            | 'W.h/km'
+            | 'N'
+            | '%'
+            | 'bpm'
+            | 'Hz'
+            | 'rpm'
+            | '[mi_i]/[gal_br]'
+            | 'L/100km'
+            | 'm/m3'
+            | 'lx'
+            | 'H'
+            | '[ft_i]'
+            | '[in_i]'
+            | '[mi_i]'
+            | '[nmi_i]'
+            | '[yd_i]'
+            | 'cm'
+            | 'dm'
+            | 'km'
+            | 'm'
+            | 'mm'
+            | 'g/km'
+            | 'kg/m'
+            | 'lm'
+            | 'Wb'
+            | 'T'
+            | '[lb_av]'
+            | 'g'
+            | 'kg'
+            | 't'
+            | '[HP_e]'
+            | '[HP_m]'
+            | '[HP_s]'
+            | '[HP]'
+            | 'kW'
+            | 'W'
+            | 'Pa'
+            | 'Bq'
+            | '[kn_i]'
+            | 'km/h'
+            | 'm/s'
+            | '[degF]'
+            | 'Cel'
+            | 'K'
+            | 'a'
+            | 'd'
+            | 'h'
+            | 'min'
+            | 'mo'
+            | 's'
+            | 'wk'
+            | 'N.m'
+            | '[gal_br]'
+            | '[pk_br]'
+            | 'L'
+            | 'm3';
+        value?: number;
+        result?: number;
+    }> {
+        const res = await fetch('https://api.exoapi.dev/unit-converter', {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${this.options.apiKey}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(params),
+        });
+        if (res.status >= 400) {
+            throw await res.json();
+        }
+        return await res.json();
+    }
+
+    /**
+     * Generate high quality QR code & barcode images in a matter of seconds
+     */
+    async barcodeGenerator(params: {
+        type:
+            | 'auspost'
+            | 'azteccode'
+            | 'azteccodecompact'
+            | 'aztecrune'
+            | 'bc412'
+            | 'channelcode'
+            | 'codablockf'
+            | 'code11'
+            | 'code128'
+            | 'code16k'
+            | 'code2of5'
+            | 'code32'
+            | 'code39'
+            | 'code39ext'
+            | 'code49'
+            | 'code93'
+            | 'code93ext'
+            | 'codeone'
+            | 'coop2of5'
+            | 'daft'
+            | 'databarexpanded'
+            | 'databarexpandedcomposite'
+            | 'databarexpandedstacked'
+            | 'databarexpandedstackedcomposite'
+            | 'databarlimited'
+            | 'databarlimitedcomposite'
+            | 'databaromni'
+            | 'databaromnicomposite'
+            | 'databarstacked'
+            | 'databarstackedcomposite'
+            | 'databarstackedomni'
+            | 'databarstackedomnicomposite'
+            | 'databartruncated'
+            | 'databartruncatedcomposite'
+            | 'datalogic2of5'
+            | 'datamatrix'
+            | 'datamatrixrectangular'
+            | 'datamatrixrectangularextension'
+            | 'dotcode'
+            | 'ean13'
+            | 'ean13composite'
+            | 'ean14'
+            | 'ean2'
+            | 'ean5'
+            | 'ean8'
+            | 'ean8composite'
+            | 'flattermarken'
+            | 'gs1-128'
+            | 'gs1-128composite'
+            | 'gs1-cc'
+            | 'gs1datamatrix'
+            | 'gs1datamatrixrectangular'
+            | 'gs1northamericancoupon'
+            | 'gs1qrcode'
+            | 'hanxin'
+            | 'hibcazteccode'
+            | 'hibccodablockf'
+            | 'hibccode128'
+            | 'hibccode39'
+            | 'hibcdatamatrix'
+            | 'hibcdatamatrixrectangular'
+            | 'hibcmicropdf417'
+            | 'hibcpdf417'
+            | 'hibcqrcode'
+            | 'iata2of5'
+            | 'identcode'
+            | 'industrial2of5'
+            | 'interleaved2of5'
+            | 'isbn'
+            | 'ismn'
+            | 'issn'
+            | 'itf14'
+            | 'japanpost'
+            | 'kix'
+            | 'leitcode'
+            | 'mailmark'
+            | 'matrix2of5'
+            | 'maxicode'
+            | 'micropdf417'
+            | 'microqrcode'
+            | 'msi'
+            | 'onecode'
+            | 'pdf417'
+            | 'pdf417compact'
+            | 'pharmacode'
+            | 'pharmacode2'
+            | 'planet'
+            | 'plessey'
+            | 'posicode'
+            | 'postnet'
+            | 'pzn'
+            | 'qrcode'
+            | 'rationalizedCodabar'
+            | 'raw'
+            | 'royalmail'
+            | 'sscc18'
+            | 'symbol'
+            | 'telepen'
+            | 'telepennumeric'
+            | 'ultracode'
+            | 'upca'
+            | 'upcacomposite'
+            | 'upce'
+            | 'upcecomposite';
+        value: string;
+        format?: 'png' | 'svg';
+        width?: number;
+        height?: number;
+        showText?: boolean;
+        fitWidth?: boolean;
+        foregroundColor?: string;
+        backgroundColor?: string;
+    }): Promise<Blob> {
+        const res = await fetch('https://api.exoapi.dev/barcode-generator', {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${this.options.apiKey}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(params),
+        });
+        if (res.status >= 400) {
+            throw await res.json();
+        }
+        return await res.blob();
+    }
+
+    /**
+     * Effortlessly convert GPS coordinates to human-readable addresses
+     */
+    async reverseGeocoding(params: {
+        lat: number;
+        lon: number;
+        locale?: string;
+    }): Promise<{
+        lat?: number;
+        lon?: number;
+        address?: string;
+        houseNumber?: string;
+        street?: string;
+        postalCode?: string;
+        city?: string;
+        region?: string;
+        regionCode?: string;
+        country?: string;
+        countryCode?: string;
+        countryCode3?: string;
+        currency?: string;
+    }> {
+        const res = await fetch('https://api.exoapi.dev/reverse-geocoding', {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${this.options.apiKey}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(params),
+        });
+        if (res.status >= 400) {
+            throw await res.json();
+        }
+        return await res.json();
+    }
+}
