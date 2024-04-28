@@ -1,3 +1,5 @@
+import fetch from 'cross-fetch';
+
 export interface ExoAPIOptions {
     apiKey?: string;
     coreUrl?: string;

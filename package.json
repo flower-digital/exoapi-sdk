@@ -1,23 +1,36 @@
 {
-  "name": "@flower-digital/exoapi-sdk",
-  "version": "1.0.1",
-  "description": "JavaScript/TypeScript SDK for ExoAPI",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/flower-digital/exoapi-sdk.git"
-  },
-  "license": "MIT",
-  "scripts": {
-    "prepare": "npm run build",
-    "build": "tsc --declaration",
-    "generate-code": "curl http://localhost:3600/products/sdk/typescript > src/index.ts",
-    "test": "exit 0"
-  },
-  "devDependencies": {
-    "@types/node": "^20.12.7",
-    "ts-node": "10.9.2",
-    "typescript": "5.4.3"
-  }
+    "name": "@flower-digital/exoapi-sdk",
+    "version": "1.0.2",
+    "description": "JavaScript/TypeScript SDK for ExoAPI",
+    "main": "dist/index.js",
+    "typings": "dist/index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/flower-digital/exoapi-sdk.git"
+    },
+    "keywords": [
+        "reverse geocoding",
+        "barcode generator",
+        "html renderer",
+        "unit converter"
+    ],
+    "license": "MIT",
+    "scripts": {
+        "prepare": "npm run build",
+        "build": "tsc --declaration",
+        "generate-code": "curl http://localhost:3600/products/sdk/typescript > src/index.ts",
+        "test": "exit 0"
+    },
+    "prettier": {
+        "tabWidth": 4,
+        "singleQuote": true
+    },
+    "devDependencies": {
+        "@types/node": "^20.12.7",
+        "ts-node": "10.9.2",
+        "typescript": "5.4.3"
+    },
+    "dependencies": {
+        "cross-fetch": "^4.0.0"
+    }
 }
