@@ -1,6 +1,6 @@
 {
     "name": "@flower-digital/exoapi-sdk",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "JavaScript/TypeScript SDK for ExoAPI",
     "main": "dist/index.js",
     "typings": "dist/index.d.ts",
@@ -9,9 +9,10 @@
         "url": "git+https://github.com/flower-digital/exoapi-sdk.git"
     },
     "keywords": [
-        "reverse geocoding",
         "barcode generator",
+        "content moderation",
         "html renderer",
+        "reverse geocoding",
         "unit converter"
     ],
     "license": "MIT",

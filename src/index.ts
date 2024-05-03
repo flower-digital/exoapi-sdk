@@ -755,4 +755,29 @@ export class ExoAPI {
         }
         return await res.json();
     }
+
+    /**
+     * Automatically detect unwanted content and enforce your moderation rules
+     */
+    async contentModeration(params: { text: string }): Promise<{
+        safetyScore?: number;
+        reason?: string;
+        hateSpeechScore?: number;
+        dangerousContentScore?: number;
+        harassmentScore?: number;
+        sexuallyExplicitScore?: number;
+    }> {
+        const res = await fetch('https://api.exoapi.dev/content-moderation', {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${this.options.apiKey}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(params),
+        });
+        if (res.status >= 400) {
+            throw await res.json();
+        }
+        return await res.json();
+    }
 }
