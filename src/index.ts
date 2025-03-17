@@ -766,6 +766,7 @@ export class ExoAPI {
         dangerousContentScore?: number;
         harassmentScore?: number;
         sexuallyExplicitScore?: number;
+        spamScore?: number;
     }> {
         const res = await fetch('https://api.exoapi.dev/content-moderation', {
             method: 'POST',
