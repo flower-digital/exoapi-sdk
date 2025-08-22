@@ -759,7 +759,12 @@ export class ExoAPI {
     /**
      * Automatically detect unwanted content and enforce your moderation rules
      */
-    async contentModeration(params: { text: string }): Promise<{
+    async contentModeration(params: {
+        text: string;
+        keywords?: {
+            [category: string]: string[];
+        };
+    }): Promise<{
         safetyScore?: number;
         reason?: string;
         hateSpeechScore?: number;
@@ -767,6 +772,9 @@ export class ExoAPI {
         harassmentScore?: number;
         sexuallyExplicitScore?: number;
         spamScore?: number;
+        keywordMatches?: {
+            [category: string]: boolean;
+        };
     }> {
         const res = await fetch('https://api.exoapi.dev/content-moderation', {
             method: 'POST',
