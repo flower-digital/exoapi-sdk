@@ -1,6 +1,6 @@
 {
     "name": "@flower-digital/exoapi-sdk",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "description": "JavaScript/TypeScript SDK for ExoAPI",
     "main": "dist/index.js",
     "typings": "dist/index.d.ts",
@@ -27,11 +27,11 @@
         "singleQuote": true
     },
     "devDependencies": {
-        "@types/node": "^20.12.7",
+        "@types/node": "20.12.7",
         "ts-node": "10.9.2",
         "typescript": "5.4.3"
     },
     "dependencies": {
-        "cross-fetch": "^4.0.0"
+        "cross-fetch": "4.0.0"
     }
 }

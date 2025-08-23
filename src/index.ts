@@ -45,7 +45,7 @@ export class ExoAPI {
         header?: string;
         footer?: string;
     }): Promise<Blob> {
-        const res = await fetch('https://api.exoapi.dev/html-renderer', {
+        const res = await fetch(`${this.options.coreUrl}/html-renderer`, {
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${this.options.apiKey}`,
@@ -574,7 +574,7 @@ export class ExoAPI {
         value?: number;
         result?: number;
     }> {
-        const res = await fetch('https://api.exoapi.dev/unit-converter', {
+        const res = await fetch(`${this.options.coreUrl}/unit-converter`, {
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${this.options.apiKey}`,
@@ -706,7 +706,7 @@ export class ExoAPI {
         foregroundColor?: string;
         backgroundColor?: string;
     }): Promise<Blob> {
-        const res = await fetch('https://api.exoapi.dev/barcode-generator', {
+        const res = await fetch(`${this.options.coreUrl}/barcode-generator`, {
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${this.options.apiKey}`,
@@ -742,7 +742,7 @@ export class ExoAPI {
         countryCode3?: string;
         currency?: string;
     }> {
-        const res = await fetch('https://api.exoapi.dev/reverse-geocoding', {
+        const res = await fetch(`${this.options.coreUrl}/reverse-geocoding`, {
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${this.options.apiKey}`,
@@ -776,7 +776,7 @@ export class ExoAPI {
             [category: string]: boolean;
         };
     }> {
-        const res = await fetch('https://api.exoapi.dev/content-moderation', {
+        const res = await fetch(`${this.options.coreUrl}/content-moderation`, {
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${this.options.apiKey}`,
