@@ -762,7 +762,7 @@ export class ExoAPI {
     async contentModeration(params: {
         text: string;
         keywords?: {
-            [category: string]: string[];
+            [category: string]: string[] | string;
         };
     }): Promise<{
         safetyScore?: number;
@@ -777,6 +777,32 @@ export class ExoAPI {
         };
     }> {
         const res = await fetch(`${this.options.coreUrl}/content-moderation`, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${this.options.apiKey}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(params),
+        });
+        if (res.status >= 400) {
+            throw await res.json();
+        }
+        return await res.json();
+    }
+
+    /**
+     * Easily store and retrieve key/value data configurations
+     */
+    async datastore(params: {
+        key: string;
+        data?: object | string | any[] | number | number | boolean | string;
+    }): Promise<{
+        key?: string;
+        data?: object | any[] | string | number | number | boolean | string;
+        createdAt?: string;
+        updatedAt?: string;
+    }> {
+        const res = await fetch(`${this.options.coreUrl}/datastore`, {
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${this.options.apiKey}`,
