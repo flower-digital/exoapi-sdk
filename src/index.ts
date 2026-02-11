@@ -773,7 +773,7 @@ export class ExoAPI {
         sexuallyExplicitScore?: number;
         spamScore?: number;
         keywordMatches?: {
-            [category: string]: boolean;
+            [category: string]: string[];
         };
     }> {
         const res = await fetch(`${this.options.coreUrl}/content-moderation`, {
