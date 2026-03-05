@@ -760,7 +760,8 @@ export class ExoAPI {
      * Automatically detect unwanted content and enforce your moderation rules
      */
     async contentModeration(params: {
-        text: string;
+        text?: string;
+        image?: string;
         keywords?: {
             [category: string]: string[] | string;
         };
