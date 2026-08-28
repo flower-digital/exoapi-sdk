@@ -757,6 +757,38 @@ export class ExoAPI {
     }
 
     /**
+     * Effortlessly convert human-readable addresses into GPS coordinates
+     */
+    async geocoding(params: { address: string; locale?: string }): Promise<{
+        address?: string;
+        lat?: number;
+        lon?: number;
+        houseNumber?: string;
+        street?: string;
+        postalCode?: string;
+        city?: string;
+        region?: string;
+        regionCode?: string;
+        country?: string;
+        countryCode?: string;
+        countryCode3?: string;
+        currency?: string;
+    }> {
+        const res = await fetch(`${this.options.coreUrl}/geocoding`, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${this.options.apiKey}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(params),
+        });
+        if (res.status >= 400) {
+            throw await res.json();
+        }
+        return await res.json();
+    }
+
+    /**
      * Automatically detect unwanted content and enforce your moderation rules
      */
     async contentModeration(params: {
